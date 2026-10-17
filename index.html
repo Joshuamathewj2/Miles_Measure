@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Sem V — Ego Tracker</title>
+<title>Sem V — MileS Measure</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
@@ -72,7 +72,11 @@ body{min-height:100vh;padding-bottom:2rem;}
 .legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;}
 .li{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3);font-family:var(--font-mono);}
 .ld{width:8px;height:8px;border-radius:2px;}
-.roast{border-radius:var(--radius);padding:12px 16px;font-size:13px;line-height:1.65;font-weight:500;border:1px solid;font-family:var(--font-mono);letter-spacing:0.01em;}
+/* Bible verse section */
+.verses{display:block;}
+.verse-card{background:#1a1b2e;border:1px solid #2c2e4a;border-radius:var(--radius);padding:16px;display:flex;flex-direction:column;gap:8px;}
+.verse-ref{font-family:var(--font-mono);font-size:11px;font-weight:700;color:#b8bcf0;letter-spacing:0.08em;text-transform:uppercase;}
+.verse-text{font-size:15px;line-height:1.6;color:#eceefb;}
 .cinfo{font-size:12px;color:#fff;margin-bottom:14px;padding:0 2px;}
 ::-webkit-scrollbar{width:4px;}
 ::-webkit-scrollbar-track{background:var(--bg);}
@@ -82,8 +86,8 @@ body{min-height:100vh;padding-bottom:2rem;}
 <body>
 <div class="topbar">
   <div class="logo-wrap">
-    <img src="logo.png" alt="Ego Tracker Logo" class="logo">
-    <span class="topbar-title">EGO TRACKER</span>
+    <img src="logo.png" alt="MileS Measure Logo" class="logo">
+    <span class="topbar-title">MILES MEASURE</span>
   </div>
   <span class="topbar-score">OVERALL: <span id="overall-pct">0%</span></span>
 </div>
@@ -115,7 +119,7 @@ body{min-height:100vh;padding-bottom:2rem;}
       <div class="li"><div class="ld" style="background:#ff4444"></div>NOT STARTED</div>
     </div>
   </div>
-  <div class="roast" id="roast"></div>
+  <div class="verses" id="verses"></div>
 </div>
 <script>
 const DATA={
@@ -164,7 +168,18 @@ const DATA={
 };
 
 const COURSES=Object.keys(DATA);
-const ROASTS={0:{t:'0%. ZERO. Not even started. A topper who skips studying is just a title with no content.',c:'rgba(255,68,68,0.1)',b:'rgba(255,68,68,0.3)',tx:'#ff6b6b'},10:{t:"10%? One topic and a nap. Your ego wrote a cheque your prep can't cash. Start.",c:'rgba(255,68,68,0.1)',b:'rgba(255,68,68,0.3)',tx:'#ff6b6b'},20:{t:"20%. The textbook is open. That's progress. But you're 80% away from done.",c:'rgba(255,149,0,0.1)',b:'rgba(255,149,0,0.3)',tx:'#ff9500'},30:{t:"30%. Some momentum. Still in the danger zone. The exam date doesn't care about your excuses.",c:'rgba(255,149,0,0.1)',b:'rgba(255,149,0,0.3)',tx:'#ff9500'},40:{t:"40%. Almost half. Almost isn't a grade. Push through.",c:'rgba(255,149,0,0.1)',b:'rgba(255,149,0,0.3)',tx:'#ff9500'},50:{t:'50%. Exactly halfway. The second half is what separates toppers from the rest. Choose.',c:'rgba(255,149,0,0.1)',b:'rgba(255,149,0,0.3)',tx:'#ff9500'},60:{t:"60%. The ego has receipts now. Don't let up.",c:'rgba(200,255,0,0.08)',b:'rgba(200,255,0,0.25)',tx:'#c8ff00'},70:{t:'70%. Solid. The lazy version of you is losing. Good. Keep going.',c:'rgba(200,255,0,0.08)',b:'rgba(200,255,0,0.25)',tx:'#c8ff00'},80:{t:'80%. Top tier territory. This is what doing the work actually looks like.',c:'rgba(68,204,68,0.1)',b:'rgba(68,204,68,0.3)',tx:'#44cc44'},90:{t:"90%! Almost a complete sweep. That last 10% is your signature. Don't leave it blank.",c:'rgba(68,204,68,0.1)',b:'rgba(68,204,68,0.3)',tx:'#44cc44'},100:{t:'100%. FULL UNIT CLEARED. Certified. Now do this for every single unit.',c:'rgba(68,204,68,0.15)',b:'rgba(68,204,68,0.4)',tx:'#44cc44'}};
+const VERSES=[
+  {ref:'Exodus 14:14',text:'\u201CGod says, \u2018Don\u2019t put too much pressure on yourself. Do what you can, and let Me take care of the rest.\u2019\u201D'},
+  {ref:'Psalm 55:22',text:'\u201CEven when life feels heavy, God is your strength. He will carry you to a place of peace.\u201D'},
+  {ref:'1 Peter 5:7',text:'\u201COverthinking will kill your peace. Pray and leave it to God, for He cares about you.\u201D'},
+  {ref:'Joshua 1:9',text:'\u201CBe strong and courageous. Do not be afraid; do not be discouraged, for the Lord is with you wherever you go.\u201D'},
+  {ref:'Matthew 19:26',text:'\u201CWhat is impossible with man is possible with God.\u201D'},
+  {ref:'Luke 18:1',text:'\u201CAlways pray and never lose heart. God hears you.\u201D'},
+  {ref:'Joshua 1:9',text:'\u201CHave I not commanded you? Be strong and courageous. Do not be afraid; do not be discouraged, for the LORD your God will be with you wherever you go.\u201D'},
+  {ref:'Philippians 4:6-7',text:'\u201CDo not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God. And the peace of God, which transcends all understanding, will guard your hearts and your minds in Christ Jesus.\u201D'},
+  {ref:'Philippians 4:13',text:'\u201CI can do all things through Christ who strengthens me.\u201D'},
+  {ref:'Proverbs 3:5-6',text:'\u201CTrust in the Lord with all your heart, and lean not on your own understanding. In all your ways acknowledge Him, and He shall direct your paths.\u201D'}
+];
 
 function initState(){const saved=localStorage.getItem('sem5_ego_v1');if(saved){try{return JSON.parse(saved);}catch(e){}}const s={};COURSES.forEach(c=>{s[c]=DATA[c].units.map(u=>({name:u.name,subtopics:u.topics.map(t=>({name:t,status:0}))}));});return s;}
 const CAT_COLORS=[
@@ -184,7 +199,9 @@ const totalDone=()=>COURSES.reduce((a,c)=>a+state[c].reduce((b,u)=>b+u.subtopics
 const totalSTs=()=>COURSES.reduce((a,c)=>a+state[c].reduce((b,u)=>b+u.subtopics.length,0),0);
 const pipCol=sc=>sc===0?'#ff4444':sc<60?'#ff9500':'#44cc44';
 const scoreCol=sc=>sc<40?'#ff4444':sc<70?'#ff9500':'#44cc44';
-function render(){renderMetrics();renderCTabs();renderUTabs();renderPanel();renderChart();renderRoast();}
+function render(){renderMetrics();renderCTabs();renderUTabs();renderPanel();renderChart();renderVerses();}
+let verseIdx=0;
+function renderVerses(){const v=VERSES[verseIdx];document.getElementById('verses').innerHTML='<div class="verse-card"><div class="verse-ref">'+v.ref+'</div><p class="verse-text">'+v.text+'</p></div>';}
 function renderMetrics(){const ov=overallScore(),td=totalDone(),ts=totalSTs();document.getElementById('overall-pct').textContent=ov+'%';document.getElementById('metrics').innerHTML='<div class="mc"><div class="mv" style="color:'+scoreCol(ov)+'">'+ov+'%</div><div class="ml">Overall</div></div><div class="mc"><div class="mv" style="color:#44cc44">'+td+'</div><div class="ml">Done</div></div><div class="mc"><div class="mv" style="color:#888">'+(ts-td)+'</div><div class="ml">Remaining</div></div>';}
 function renderCTabs(){document.getElementById('ctabs').innerHTML=COURSES.map(c=>'<button class="ctab '+(c===aC?'active':'')+'" onclick="swC(\''+c+'\')">'+c+' <span style="opacity:0.7;font-size:10px">'+courseScore(c)+'%</span></button>').join('');}
 function renderUTabs(){
@@ -220,8 +237,7 @@ function renderPanel(){
   }).join('');
 }
 function renderChart(){document.getElementById('clbl').textContent=aC+' \u2014 UNIT PROGRESS';const labels=state[aC].map((_,i)=>'U'+(i+1));const done=state[aC].map((_,i)=>{const s=state[aC][i].subtopics;return s.length?Math.round(s.filter(t=>t.status===2).length/s.length*100):0;});const part=state[aC].map((_,i)=>{const s=state[aC][i].subtopics;return s.length?Math.round(s.filter(t=>t.status===1).length/s.length*100):0;});const none=state[aC].map((_,i)=>{const s=state[aC][i].subtopics;return s.length?Math.round(s.filter(t=>t.status===0).length/s.length*100):0;});if(chartInst)chartInst.destroy();chartInst=new Chart(document.getElementById('ch'),{type:'bar',data:{labels:labels,datasets:[{label:'Done',data:done,backgroundColor:'#44cc44',borderRadius:4,stack:'s'},{label:'In progress',data:part,backgroundColor:'#ff9500',borderRadius:0,stack:'s'},{label:'Not started',data:none,backgroundColor:'#ff4444',borderRadius:0,stack:'s'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return ctx.dataset.label+': '+ctx.raw+'%';}},backgroundColor:'#1f1f1f',borderColor:'#383838',borderWidth:1,titleColor:'#f0f0f0',bodyColor:'#888'}},scales:{x:{stacked:true,ticks:{font:{size:11,family:'Space Mono'},color:'#555'},grid:{display:false},border:{color:'#2a2a2a'}},y:{stacked:true,min:0,max:100,ticks:{callback:function(v){return v+'%';},font:{size:10,family:'Space Mono'},color:'#555'},grid:{color:'#1f1f1f'},border:{color:'#2a2a2a'}}}}});}
-function renderRoast(){const sc=unitScore(aC,aU);const r=ROASTS[Math.min(Math.floor(sc/10)*10,100)];const el=document.getElementById('roast');el.style.background=r.c;el.style.borderColor=r.b;el.style.color=r.tx;el.textContent=r.t;}
-function cycleST(i,e){if(e)e.stopPropagation();state[aC][aU].subtopics[i].status=(state[aC][aU].subtopics[i].status+1)%3;save();render();}
+function cycleST(i,e){if(e)e.stopPropagation();state[aC][aU].subtopics[i].status=(state[aC][aU].subtopics[i].status+1)%3;verseIdx=(verseIdx+1)%VERSES.length;save();render();}
 function addST(){const v=document.getElementById('newst').value.trim();if(!v)return;state[aC][aU].subtopics.push({name:v,status:0});document.getElementById('newst').value='';save();render();}
 document.getElementById('newst').addEventListener('keydown',function(e){if(e.key==='Enter')addST();});
 function swC(c){aC=c;aU=0;render();}
